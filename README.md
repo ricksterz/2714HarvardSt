@@ -4,7 +4,7 @@
 | Host | URL | Auth required? |
 |---|---|---|
 | Databricks Apps | https://harvard-st-2714-1056885807317405.aws.databricksapps.com | ✅ Databricks login |
-| GitHub Pages | https://YOUR_USERNAME.github.io/2714-harvard-st/ | ❌ Public |
+| GitHub Pages | https://YOUR_USERNAME.github.io/harvard/ | ❌ Public |
 
 ---
 
@@ -42,12 +42,12 @@ databricks apps deploy harvard-st-2714 \
 ### First-time setup
 
 **1. Create the GitHub repo**
-Go to https://github.com/new and create a repo named **`2714-harvard-st`** (public).
+Go to https://github.com/new and create a repo named **`harvard`** (public).
 
 **2. Add the remote and push source**
 ```bash
 cd ~/harvard-st-listing
-git remote add origin https://github.com/YOUR_USERNAME/2714-harvard-st.git
+git remote add origin https://github.com/YOUR_USERNAME/harvard.git
 git push -u origin main
 ```
 
@@ -78,7 +78,7 @@ git checkout main                # back to your working branch
 - Click **Save**
 
 Your site will be live at:
-**`https://YOUR_USERNAME.github.io/2714-harvard-st/`** (usually within 60 seconds)
+**`https://YOUR_USERNAME.github.io/harvard/`** (usually within 60 seconds)
 
 ### Subsequent redeploys (after editing)
 
