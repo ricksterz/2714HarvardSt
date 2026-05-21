@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en" class=""><!-- js adds 'dark' here -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2714 Harvard Street · Houston Heights</title>
+  <meta name="description" content="4 bed / 4.5 bath · 2,819 sf · Built 2018 · Sunset Heights gated community · Houston TX 77008" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    /* ── Color tokens ───────────────────────────────── */
+    :root {
+      --bg:          #F8F6F1;
+      --bg-surface:  #FFFFFF;
+      --bg-tag:      #EDE9DF;
+      --bg-footer:   #111820;
+      --text:        #1A1A1A;
+      --text-muted:  #5C5C5C;
+      --text-faint:  #999;
+      --accent:      #1E3A5F;
+      --accent-h:    #162D48;
+      --rule:        #DDD8CE;
+      --hero-over:   rgba(0,0,0,0.50);
+      --hero-over2:  rgba(0,0,0,0.10);
+    }
+    html.dark {
+      --bg:          #0E1219;
+      --bg-surface:  #161D27;
+      --bg-tag:      #1B2D40;
+      --bg-footer:   #070B10;
+      --text:        #E8E3D6;
+      --text-muted:  #8A96A8;
+      --text-faint:  #57687A;
+      --accent:      #5B8EC7;
+      --accent-h:    #4A7AB5;
+      --rule:        #253040;
+      --hero-over:   rgba(0,0,0,0.64);
+      --hero-over2:  rgba(0,0,0,0.20);
+    }
+
+    /* Apply tokens globally */
+    body          { background: var(--bg); color: var(--text); }
+    .bg-surface   { background: var(--bg-surface); }
+    .bg-tag       { background: var(--bg-tag); }
+    .text-main    { color: var(--text); }
+    .text-muted   { color: var(--text-muted); }
+    .text-accent  { color: var(--accent); }
+    .border-rule  { border-color: var(--rule); }
+    .fill-rule    { background: var(--rule); }
+    .section-rule { width: 48px; height: 2px; background: var(--accent); }
+
+    /* Hero */
+    .hero-img {
+      background-image: url('static/img/img_01.jpg');
+      background-size: cover;
+      background-position: center 30%;
+    }
+
+    /* Sticky nav */
+    #sticky-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--rule);
+      transform: translateY(-100%);
+      transition: transform 0.25s ease;
+    }
+    #sticky-nav.visible { transform: translateY(0); }
+
+    /* Gallery */
+    .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    @media (min-width: 768px)  { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1024px) { .gallery-grid { grid-template-columns: repeat(4, 1fr); } }
+    .gallery-thumb {
+      aspect-ratio: 4/3; object-fit: cover; width: 100%;
+      cursor: zoom-in; transition: opacity 0.18s;
+    }
+    .gallery-thumb:hover { opacity: 0.84; }
+
+    /* Lightbox */
+    #lightbox {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.94); z-index: 9999;
+      align-items: center; justify-content: center;
+    }
+    #lightbox.open { display: flex; }
+    #lb-img { max-width: 92vw; max-height: 86vh; object-fit: contain; border-radius: 2px; }
+    #lb-counter {
+      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.45); font-size: 0.7rem;
+      letter-spacing: 0.12em; font-family: 'Inter', sans-serif;
+    }
+    .lb-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+      color: white; width: 44px; height: 44px; border-radius: 50%;
+      font-size: 1.2rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+    .lb-btn:hover { background: rgba(255,255,255,0.18); }
+    #lb-prev { left: 16px; }
+    #lb-next { right: 16px; }
+    #lb-close {
+      position: absolute; top: 16px; right: 20px;
+      color: rgba(255,255,255,0.65); font-size: 1.5rem;
+      cursor: pointer; line-height: 1; padding: 6px;
+      background: none; border: none;
+    }
+    #lb-close:hover { color: white; }
+
+    /* Stats divider */
+    .stat-divider { width: 1px; height: 36px; background: var(--rule); }
+
+    /* Feature tag */
+    .feature-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--bg-tag); color: var(--text);
+      border-radius: 4px; padding: 6px 12px;
+      font-size: 0.8125rem; font-family: 'Inter', sans-serif;
+    }
+
+    /* Value bar */
+    .value-bar-track { background: var(--rule); border-radius: 4px; height: 8px; overflow: hidden; }
+    .value-bar-fill  { height: 100%; border-radius: 4px; background: var(--accent); transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-block; background: var(--accent); color: white;
+      font-family: 'Inter', sans-serif; font-weight: 500;
+      font-size: 0.9375rem; letter-spacing: 0.04em;
+      padding: 14px 32px; border-radius: 3px; text-decoration: none;
+      transition: background 0.18s;
+    }
+    .btn-primary:hover { background: var(--accent-h); }
+    .btn-outline {
+      display: inline-block; border: 1.5px solid rgba(255,255,255,0.55); color: white;
+      font-family: 'Inter', sans-serif; font-weight: 500;
+      font-size: 0.9375rem; letter-spacing: 0.04em;
+      padding: 13px 30px; border-radius: 3px; text-decoration: none;
+      transition: all 0.18s;
+    }
+    .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+    /* Dark-mode toggle + copy-link btn */
+    #mode-btn, #copy-btn {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--bg-tag); border: 1px solid var(--rule);
+      color: var(--text); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.18s, border-color 0.18s;
+      flex-shrink: 0;
+    }
+    #mode-btn { font-size: 1.1rem; }
+    #copy-btn svg { width: 16px; height: 16px; }
+    #mode-btn:hover, #copy-btn:hover { background: var(--rule); }
+    /* Copy toast */
+    #copy-toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(12px);
+      background: var(--accent); color: white;
+      font-family: 'Inter', sans-serif; font-size: 0.75rem; letter-spacing: 0.06em;
+      padding: 8px 18px; border-radius: 999px;
+      opacity: 0; transition: opacity 0.2s, transform 0.2s; pointer-events: none; z-index: 9998;
+    }
+    #copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* Floor plan */
+    .floorplan-img {
+      max-width: 560px; width: 100%;
+      border: 1px solid var(--rule); border-radius: 2px;
+    }
+    html.dark .floorplan-img { filter: invert(1) hue-rotate(180deg); }
+
+    /* Agent card */
+    .agent-card {
+      background: var(--bg-surface); border: 1px solid var(--rule);
+      border-radius: 3px; padding: 32px 36px;
+      display: flex; flex-wrap: wrap; gap: 24px; align-items: center;
+      max-width: 640px;
+    }
+    .agent-avatar {
+      width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
+      background: var(--accent); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 500;
+    }
+    .agent-link {
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Inter', sans-serif; font-size: 0.875rem;
+      color: var(--text-muted); text-decoration: none;
+      transition: color 0.15s;
+    }
+    .agent-link:hover { color: var(--accent); }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+  </style>
+</head>
+<body class="font-sans antialiased">
+
+<!-- ─── STICKY NAV ───────────────────────────────────────────────────── -->
+<nav id="sticky-nav">
+  <div class="max-w-screen-xl mx-auto px-6 md:px-16 py-3 flex items-center justify-between gap-4">
+    <div>
+      <p class="font-serif text-accent text-base font-medium leading-tight">2714 Harvard Street</p>
+      <p class="font-sans text-[11px] tracking-wide" style="color:var(--text-muted)">Houston Heights · 77008</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="font-serif text-accent text-lg font-medium hidden sm:block">$575,000</span>
+      <a href="https://s.hartech.io/mRMv3T8Q4UWp" target="_blank" rel="noopener" class="btn-primary !py-2 !px-5 !text-sm hidden sm:inline-block">Schedule a Tour</a>
+      <button id="copy-btn" aria-label="Copy link to listing">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
+      <button id="mode-btn" aria-label="Toggle dark mode">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Copy-link toast -->
+<div id="copy-toast">Link copied!</div>
+
+<!-- ─── HERO ─────────────────────────────────────────────────────────── -->
+<section id="hero" class="hero-img relative w-full" style="height:90vh;min-height:520px;max-height:900px;">
+  <div class="absolute inset-0" style="background:linear-gradient(to bottom, var(--hero-over2) 0%, var(--hero-over) 100%);"></div>
+  <div class="relative z-10 flex flex-col justify-end h-full px-6 pb-12 md:px-16 md:pb-16 max-w-screen-xl mx-auto">
+    <p class="font-sans text-white/70 text-xs tracking-[0.18em] uppercase mb-3">Houston Heights · Sunset Heights · 77008</p>
+    <h1 class="font-serif text-white text-4xl md:text-6xl lg:text-7xl font-normal leading-tight mb-4">2714 Harvard Street</h1>
+    <p class="font-serif text-white/90 text-2xl md:text-3xl italic mb-8">$575,000</p>
+    <div class="flex flex-col sm:flex-row gap-3">
+      <a href="https://s.hartech.io/mRMv3T8Q4UWp" target="_blank" rel="noopener" class="btn-primary text-center">Schedule a Tour</a>
+      <a href="#gallery" class="btn-outline text-center">View Photos</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STATS STRIP ───────────────────────────────────────────────────── -->
+<section class="bg-surface border-y border-rule">
+  <div class="max-w-screen-xl mx-auto px-6 md:px-16 py-6 flex flex-wrap justify-center md:justify-between items-center gap-y-4">
+    <div class="flex flex-wrap justify-center items-center divide-x-0">
+      <div class="flex flex-col items-center px-5 md:px-8">
+        <span class="font-serif text-2xl md:text-3xl text-accent font-medium">4</span>
+        <span class="font-sans text-[11px] tracking-[0.12em] uppercase mt-0.5" style="color:var(--text-muted)">Bedrooms</span>
+      </div>
+      <div class="stat-divider hidden md:block mx-2"></div>
+      <div class="flex flex-col items-center px-5 md:px-8">
+        <span class="font-serif text-2xl md:text-3xl text-accent font-medium">4.5</span>
+        <span class="font-sans text-[11px] tracking-[0.12em] uppercase mt-0.5" style="color:var(--text-muted)">Bathrooms</span>
+      </div>
+      <div class="stat-divider hidden md:block mx-2"></div>
+      <div class="flex flex-col items-center px-5 md:px-8">
+        <span class="font-serif text-2xl md:text-3xl text-accent font-medium">2,819</span>
+        <span class="font-sans text-[11px] tracking-[0.12em] uppercase mt-0.5" style="color:var(--text-muted)">Sq Ft</span>
+      </div>
+      <div class="stat-divider hidden md:block mx-2"></div>
+      <div class="flex flex-col items-center px-5 md:px-8">
+        <span class="font-serif text-2xl md:text-3xl text-accent font-medium">2018</span>
+        <span class="font-sans text-[11px] tracking-[0.12em] uppercase mt-0.5" style="color:var(--text-muted)">Year Built</span>
+      </div>
+      <div class="stat-divider hidden md:block mx-2"></div>
+      <div class="flex flex-col items-center px-5 md:px-8">
+        <span class="font-serif text-2xl md:text-3xl text-accent font-medium">2</span>
+        <span class="font-sans text-[11px] tracking-[0.12em] uppercase mt-0.5" style="color:var(--text-muted)">Car Garage</span>
+      </div>
+      <div class="stat-divider hidden md:block mx-2"></div>
+      <div class="flex flex-col items-center px-5 md:px-8">
+        <span class="font-serif text-2xl md:text-3xl text-accent font-medium">$204</span>
+        <span class="font-sans text-[11px] tracking-[0.12em] uppercase mt-0.5" style="color:var(--text-muted)">Per Sq Ft</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ──────────────────────────────────────────────────────────── -->
+<section class="max-w-screen-xl mx-auto px-6 md:px-16 py-16 md:py-24">
+  <div class="max-w-2xl reveal">
+    <div class="section-rule mb-6"></div>
+    <h2 class="font-serif text-3xl md:text-4xl font-normal text-accent mb-6 leading-snug">Built for how people<br class="hidden md:block" /> actually live in 2026.</h2>
+    <p class="font-sans text-base md:text-lg leading-relaxed mb-4" style="color:var(--text)">
+      This 2018 corner-unit home in gated Sunset Heights offers 2,819 sf of upgrades: white oak hardwood floors, three levels of outdoor living, and a community pool. Four true ensuite bedrooms flex for guests, in-laws, home offices, or roommates; the first-floor suite is no-stairs accessible and an elevator shaft is already framed in.
+    </p>
+    <p class="font-sans text-base md:text-lg leading-relaxed mb-4" style="color:var(--text)">
+      Tech includes EV charger, hardwired ethernet, zoned AC per floor, smart thermostats, Ring entry, and tankless hot water. Inside: 12-ft ceilings, Bosch appliances, quartz counters, gas fireplace, and a primary suite with marble shower, soaking tub, and walk-in closet.
+    </p>
+    <p class="font-sans text-base md:text-lg leading-relaxed" style="color:var(--text)">
+      The fourth-floor game room opens to an oversized rooftop terrace; the second-floor balcony has a gas grill connection. Gated but facing streetside on Harvard, allowing for easy navigation. Walk to Heights retail and dining; zoned to A-rated Helms Elementary. Newer than nearly every comparable and priced at <strong>$204/sf in a $235/sf submarket.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- ─── VALUE CALLOUT ──────────────────────────────────────────────────── -->
+<section class="max-w-screen-xl mx-auto px-6 md:px-16 pb-16 md:pb-20 reveal">
+  <div class="bg-surface border border-rule rounded-sm p-8 md:p-10 max-w-2xl">
+    <p class="font-sans text-[11px] tracking-[0.16em] uppercase mb-6" style="color:var(--text-muted)">Market Context</p>
+    <div class="space-y-5">
+      <div>
+        <div class="flex justify-between items-baseline mb-1.5">
+          <span class="font-sans text-sm" style="color:var(--text)">This home</span>
+          <span class="font-serif text-accent font-medium">$204 / sf</span>
+        </div>
+        <div class="value-bar-track"><div class="value-bar-fill" data-width="87" style="width:0%"></div></div>
+      </div>
+      <div>
+        <div class="flex justify-between items-baseline mb-1.5">
+          <span class="font-sans text-sm" style="color:var(--text)">Submarket average (77008)</span>
+          <span class="font-serif font-medium" style="color:var(--text-muted)">$235 / sf</span>
+        </div>
+        <div class="value-bar-track"><div class="value-bar-fill" style="width:0%;opacity:0.35" data-width="100"></div></div>
+      </div>
+    </div>
+    <p class="font-sans text-xs mt-5" style="color:var(--text-muted)">13% below the 77008 submarket average — newer construction, same neighborhood.</p>
+  </div>
+</section>
+
+<!-- ─── GALLERY ───────────────────────────────────────────────────────── -->
+<section id="gallery" class="max-w-screen-xl mx-auto px-6 md:px-16 pb-16 md:pb-24 reveal">
+  <div class="section-rule mb-6"></div>
+  <h2 class="font-serif text-3xl md:text-4xl font-normal text-accent mb-10">Gallery</h2>
+  <div class="gallery-grid">
+    <!-- Exteriors -->
+    <img src="/static/img/img_01.jpg" alt="Front exterior"            class="gallery-thumb" data-idx="0"  data-cap="Front exterior" />
+    <img src="/static/img/img_02.jpg" alt="Street view"               class="gallery-thumb" data-idx="1"  data-cap="Street view" />
+    <img src="/static/img/img_03.jpg" alt="Entry – 2714 address"      class="gallery-thumb" data-idx="2"  data-cap="Address &amp; entry" />
+    <img src="/static/img/img_32.jpg" alt="Community grounds"         class="gallery-thumb" data-idx="3"  data-cap="Community grounds &amp; water feature" />
+    <!-- Main Living -->
+    <img src="/static/img/img_06.jpg" alt="Living &amp; dining"       class="gallery-thumb" data-idx="4"  data-cap="Living &amp; dining — open to balcony" />
+    <img src="/static/img/img_09.jpg" alt="Living room – fireplace"   class="gallery-thumb" data-idx="5"  data-cap="Living room &amp; fireplace" />
+    <img src="/static/img/img_10.jpg" alt="Living room – wide"        class="gallery-thumb" data-idx="6"  data-cap="Living room" />
+    <img src="/static/img/img_12.jpg" alt="Living room – glass wall"  class="gallery-thumb" data-idx="7"  data-cap="Living room — floor-to-ceiling glass" />
+    <!-- Kitchen -->
+    <img src="/static/img/img_13.jpg" alt="Kitchen"                   class="gallery-thumb" data-idx="8"  data-cap="Kitchen — navy island &amp; Bosch appliances" />
+    <img src="/static/img/img_14.jpg" alt="Kitchen – ovens"           class="gallery-thumb" data-idx="9"  data-cap="Kitchen — double wall oven" />
+    <img src="/static/img/img_15.jpg" alt="Kitchen open plan"         class="gallery-thumb" data-idx="10" data-cap="Kitchen — open to living" />
+    <img src="/static/img/img_16.jpg" alt="Kitchen from living"       class="gallery-thumb" data-idx="11" data-cap="Kitchen &amp; dining" />
+    <!-- Primary Suite -->
+    <img src="/static/img/img_18.jpg" alt="Primary bedroom"           class="gallery-thumb" data-idx="12" data-cap="Primary bedroom" />
+    <img src="/static/img/img_19.jpg" alt="Primary bath – shower tub" class="gallery-thumb" data-idx="13" data-cap="Primary bath — marble shower &amp; soaking tub" />
+    <img src="/static/img/img_20.jpg" alt="Primary bath – vanity"     class="gallery-thumb" data-idx="14" data-cap="Primary bath — double vanity" />
+    <!-- Game Room -->
+    <img src="/static/img/img_21.jpg" alt="4th-floor game room"       class="gallery-thumb" data-idx="15" data-cap="4th-floor game room" />
+    <img src="/static/img/img_22.jpg" alt="Game room – alt view"      class="gallery-thumb" data-idx="16" data-cap="Game room" />
+    <!-- Bedrooms / Baths -->
+    <img src="/static/img/img_23.jpg" alt="Secondary bedroom"         class="gallery-thumb" data-idx="17" data-cap="Secondary bedroom" />
+    <img src="/static/img/img_25.jpg" alt="Secondary bedroom"         class="gallery-thumb" data-idx="18" data-cap="Secondary bedroom" />
+    <img src="/static/img/img_27.jpg" alt="Secondary bath"            class="gallery-thumb" data-idx="19" data-cap="Secondary bath" />
+    <!-- Outdoor -->
+    <img src="/static/img/img_29.jpg" alt="Covered balcony"           class="gallery-thumb" data-idx="20" data-cap="Covered 2nd-floor balcony" />
+    <img src="/static/img/img_30.jpg" alt="Rooftop terrace"           class="gallery-thumb" data-idx="21" data-cap="Rooftop terrace" />
+    <img src="/static/img/img_31.jpg" alt="Rooftop terrace doors"     class="gallery-thumb" data-idx="22" data-cap="Rooftop terrace — French doors" />
+  </div>
+</section>
+
+<!-- ─── LIGHTBOX ──────────────────────────────────────────────────────── -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox">
+  <button id="lb-close" aria-label="Close">&#x2715;</button>
+  <button id="lb-prev" class="lb-btn" aria-label="Previous">&#8592;</button>
+  <img id="lb-img" src="" alt="" />
+  <button id="lb-next" class="lb-btn" aria-label="Next">&#8594;</button>
+  <span id="lb-counter"></span>
+</div>
+
+<!-- ─── FEATURES ──────────────────────────────────────────────────────── -->
+<section class="bg-surface border-y border-rule py-16 md:py-24">
+  <div class="max-w-screen-xl mx-auto px-6 md:px-16 reveal">
+    <div class="section-rule mb-6"></div>
+    <h2 class="font-serif text-3xl md:text-4xl font-normal text-accent mb-10">Property Features</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+      <div class="reveal reveal-delay-1">
+        <h3 class="font-sans text-[11px] tracking-[0.16em] uppercase mb-4" style="color:var(--text-muted)">Finishes &amp; Interior</h3>
+        <ul class="flex flex-wrap gap-2">
+          <li class="feature-tag">White oak hardwood floors</li>
+          <li class="feature-tag">12-ft ceilings</li>
+          <li class="feature-tag">Gas fireplace</li>
+          <li class="feature-tag">Quartz countertops</li>
+          <li class="feature-tag">Navy + white Shaker cabinetry</li>
+          <li class="feature-tag">Bosch stainless appliances</li>
+          <li class="feature-tag">Double wall oven</li>
+          <li class="feature-tag">Plantation shutters</li>
+        </ul>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <h3 class="font-sans text-[11px] tracking-[0.16em] uppercase mb-4" style="color:var(--text-muted)">Primary Suite</h3>
+        <ul class="flex flex-wrap gap-2 mb-6">
+          <li class="feature-tag">Marble shower &amp; soaking tub</li>
+          <li class="feature-tag">Double vanity — dark quartz</li>
+          <li class="feature-tag">Walk-in closet</li>
+          <li class="feature-tag">Marble tile floors</li>
+        </ul>
+        <h3 class="font-sans text-[11px] tracking-[0.16em] uppercase mb-4" style="color:var(--text-muted)">Flexibility</h3>
+        <ul class="flex flex-wrap gap-2">
+          <li class="feature-tag">4 ensuite bedrooms</li>
+          <li class="feature-tag">1st-floor suite (no-stairs)</li>
+          <li class="feature-tag">Elevator shaft pre-framed</li>
+          <li class="feature-tag">4th-floor game room / flex</li>
+        </ul>
+      </div>
+
+      <div class="reveal reveal-delay-3">
+        <h3 class="font-sans text-[11px] tracking-[0.16em] uppercase mb-4" style="color:var(--text-muted)">Outdoor &amp; Systems</h3>
+        <ul class="flex flex-wrap gap-2">
+          <li class="feature-tag">3 levels of outdoor living</li>
+          <li class="feature-tag">Oversized rooftop terrace</li>
+          <li class="feature-tag">Covered balcony + gas grill</li>
+          <li class="feature-tag">Community pool</li>
+          <li class="feature-tag">EV charger</li>
+          <li class="feature-tag">Hardwired ethernet</li>
+          <li class="feature-tag">Zoned AC per floor</li>
+          <li class="feature-tag">Smart thermostats</li>
+          <li class="feature-tag">Ring entry</li>
+          <li class="feature-tag">Tankless hot water</li>
+          <li class="feature-tag">Gated community</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── FLOOR PLAN ────────────────────────────────────────────────────── -->
+<section id="floorplan" class="max-w-screen-xl mx-auto px-6 md:px-16 py-16 md:py-24">
+  <div class="section-rule mb-6"></div>
+  <h2 class="font-serif text-3xl md:text-4xl font-normal text-accent mb-3 reveal">Floor Plan</h2>
+  <p class="font-sans text-sm mb-10 reveal" style="color:var(--text-muted)">Four floors · 2,819 sf · 2-car garage</p>
+  <div class="flex flex-col lg:flex-row gap-12 items-start reveal">
+    <div class="flex-shrink-0">
+      <img src="/static/img/floorplan.png" alt="2714 Harvard Street — four-floor plan"
+           class="floorplan-img cursor-zoom-in"
+           id="floorplan-img" />
+    </div>
+    <div class="flex flex-col gap-4 lg:pt-2">
+      <div class="space-y-3">
+        <div class="flex items-start gap-3 pb-3 border-b border-rule">
+          <span class="font-sans text-[11px] tracking-[0.12em] uppercase w-16 flex-shrink-0 pt-0.5" style="color:var(--text-muted)">Floor 1</span>
+          <span class="font-sans text-sm" style="color:var(--text)">2-car garage · Ensuite bedroom (no-stairs accessible) · Entry · Storage · Pre-framed elevator shaft</span>
+        </div>
+        <div class="flex items-start gap-3 pb-3 border-b border-rule">
+          <span class="font-sans text-[11px] tracking-[0.12em] uppercase w-16 flex-shrink-0 pt-0.5" style="color:var(--text-muted)">Floor 2</span>
+          <span class="font-sans text-sm" style="color:var(--text)">Open kitchen · Dining room · Living room with gas fireplace · Powder room · Covered balcony with gas grill connection</span>
+        </div>
+        <div class="flex items-start gap-3 pb-3 border-b border-rule">
+          <span class="font-sans text-[11px] tracking-[0.12em] uppercase w-16 flex-shrink-0 pt-0.5" style="color:var(--text-muted)">Floor 3</span>
+          <span class="font-sans text-sm" style="color:var(--text)">Primary suite with walk-in closet · Marble bath (soaking tub + glass shower) · Two secondary ensuite bedrooms</span>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="font-sans text-[11px] tracking-[0.12em] uppercase w-16 flex-shrink-0 pt-0.5" style="color:var(--text-muted)">Floor 4</span>
+          <span class="font-sans text-sm" style="color:var(--text)">Game room / flex space · Ensuite bedroom · Oversized rooftop terrace</span>
+        </div>
+      </div>
+      <a href="/static/img/floorplan.pdf" download="2714-Harvard-FloorPlan.pdf"
+         class="inline-flex items-center gap-2 mt-4 font-sans text-sm font-medium text-accent hover:underline">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download PDF
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NEIGHBORHOOD ──────────────────────────────────────────────────── -->
+<section class="max-w-screen-xl mx-auto px-6 md:px-16 py-16 md:py-24">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+    <div class="reveal">
+      <div class="section-rule mb-6"></div>
+      <h2 class="font-serif text-3xl md:text-4xl font-normal text-accent mb-6">The Heights</h2>
+      <p class="font-sans text-base md:text-lg leading-relaxed mb-4" style="color:var(--text)">
+        Sunset Heights sits at the heart of Houston's most walkable urban neighborhood. Step outside the gate and you're a short stroll from 19th and 20th Street's independent restaurants, boutiques, and coffee shops — plus the Heights Farmers Market on Saturdays.
+      </p>
+      <p class="font-sans text-base md:text-lg leading-relaxed mb-4" style="color:var(--text)">
+        The M-K-T trail system connects through White Oak Bayou greenspace directly from the neighborhood, and Heights Boulevard's landmark tree-lined esplanade is minutes away on foot. Yale Street's Whole Foods, Target, and restaurants handle everyday errands without a highway.
+      </p>
+      <p class="font-sans text-base md:text-lg leading-relaxed" style="color:var(--text)">
+        Zoned to <strong>A-rated Helms Elementary</strong> (walkable). Quick access to I-10 and Loop 610 puts Downtown, the Galleria, and both airports within easy reach.
+      </p>
+    </div>
+    <div class="reveal reveal-delay-1 w-full rounded-sm overflow-hidden border border-rule" style="height:380px;">
+      <iframe
+        src="https://maps.google.com/maps?q=2714+Harvard+St%2C+Houston%2C+TX+77008&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+        title="2714 Harvard Street on Google Maps" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ─── AGENT CARD ────────────────────────────────────────────────────── -->
+<section class="max-w-screen-xl mx-auto px-6 md:px-16 pb-16 md:pb-24">
+  <div class="section-rule mb-6 reveal"></div>
+  <h2 class="font-serif text-3xl md:text-4xl font-normal text-accent mb-10 reveal">Your Agent</h2>
+  <div class="agent-card reveal">
+    <div class="agent-avatar">KM</div>
+    <div class="flex flex-col gap-1 flex-1 min-w-0">
+      <p class="font-serif text-xl font-normal" style="color:var(--text)">Kasia McCormick, REALTOR®</p>
+      <p class="font-sans text-xs tracking-[0.12em] uppercase mb-3" style="color:var(--text-muted)">Compass RE Texas, LLC</p>
+      <div class="flex flex-wrap gap-x-6 gap-y-2">
+        <a href="tel:7733320087" class="agent-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.5 2 2 0 0 1 3.55 1.5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.22 6.22l1.78-1.78a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (773) 332-0087
+        </a>
+        <a href="mailto:kasia.mccormick@compass.com" class="agent-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          kasia.mccormick@compass.com
+        </a>
+        <a href="https://kasiamccormick.com/" target="_blank" rel="noopener" class="agent-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          kasiamccormick.com
+        </a>
+      </div>
+    </div>
+    <a href="mailto:kasia.mccormick@compass.com?subject=Inquiry: 2714 Harvard Street&body=Hi Kasia,%0A%0AI'm interested in scheduling a showing for 2714 Harvard Street, Houston TX 77008.%0A%0APlease let me know your availability.%0A%0AThank you"
+       class="btn-primary !py-3 !px-6 !text-sm self-start whitespace-nowrap">
+      Contact Kasia
+    </a>
+  </div>
+</section>
+
+<!-- ─── CTA ───────────────────────────────────────────────────────────── -->
+<section style="background:var(--accent);" class="py-16 md:py-24">
+  <div class="max-w-screen-xl mx-auto px-6 md:px-16 text-center">
+    <p class="font-sans text-white/60 text-xs tracking-[0.18em] uppercase mb-4">2714 Harvard Street · Houston Heights · TX 77008</p>
+    <h2 class="font-serif text-white text-3xl md:text-5xl font-normal mb-4">Ready to see it in person?</h2>
+    <p class="font-sans text-white/70 text-base md:text-lg mb-10 max-w-lg mx-auto">
+      Schedule a private showing through the HAR listing, or reach out to the listing agent directly.
+    </p>
+    <a href="https://s.hartech.io/mRMv3T8Q4UWp" target="_blank" rel="noopener"
+       style="background:var(--bg);color:var(--accent);"
+       class="inline-block font-sans font-medium text-[0.9375rem] tracking-wider px-10 py-4 rounded-sm hover:opacity-90 transition-opacity">
+      Request a Showing on HAR
+    </a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────────────── -->
+<footer style="background:var(--bg-footer);" class="py-10">
+  <div class="max-w-screen-xl mx-auto px-6 md:px-16 flex flex-col md:flex-row items-center justify-between gap-6">
+    <p class="font-sans text-white/40 text-xs tracking-wide">2714 Harvard Street · Houston, TX 77008 · Listed for sale</p>
+    <nav class="flex flex-wrap gap-x-6 gap-y-2 justify-center">
+      <a href="https://s.hartech.io/mRMv3T8Q4UWp" target="_blank" rel="noopener" class="font-sans text-white/50 hover:text-white/90 text-xs tracking-wide transition-colors">HAR</a>
+      <a href="https://www.zillow.com/homedetails/2714-Harvard-St-Houston-TX-77008/121104863_zpid/" target="_blank" rel="noopener" class="font-sans text-white/50 hover:text-white/90 text-xs tracking-wide transition-colors">Zillow</a>
+      <a href="https://www.realtor.com/realestateandhomes-detail/2714-Harvard-St_Houston_TX_77008_M87730-67660" target="_blank" rel="noopener" class="font-sans text-white/50 hover:text-white/90 text-xs tracking-wide transition-colors">Realtor.com</a>
+      <a href="https://www.corcoran.com/listing/for-sale/2714-harvard-street-houston-tx-77008/105421904/regionId/133" target="_blank" rel="noopener" class="font-sans text-white/50 hover:text-white/90 text-xs tracking-wide transition-colors">Corcoran</a>
+    </nav>
+    <p class="font-sans text-white/25 text-[10px]">Information deemed reliable but not guaranteed.</p>
+  </div>
+</footer>
+
+<!-- ─── SCRIPTS ───────────────────────────────────────────────────────── -->
+<script>
+// ── Dark mode ────────────────────────────────────────────────────────
+const html    = document.documentElement;
+const modeBtn = document.getElementById('mode-btn');
+const saved   = localStorage.getItem('theme');
+if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  html.classList.add('dark');
+}
+function syncIcon() {
+  modeBtn.textContent = html.classList.contains('dark') ? '☀️' : '🌙';
+}
+syncIcon();
+modeBtn.addEventListener('click', () => {
+  html.classList.toggle('dark');
+  localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+  syncIcon();
+});
+
+// ── Sticky nav ───────────────────────────────────────────────────────
+const stickyNav = document.getElementById('sticky-nav');
+const hero      = document.getElementById('hero');
+const heroObs   = new IntersectionObserver(([e]) => {
+  stickyNav.classList.toggle('visible', !e.isIntersecting);
+}, { threshold: 0 });
+heroObs.observe(hero);
+
+// ── Scroll reveal ────────────────────────────────────────────────────
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+// ── Value bars (animate when visible) ────────────────────────────────
+const barObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.value-bar-fill').forEach(b => {
+        b.style.width = b.dataset.width + '%';
+      });
+      barObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.value-bar-track').forEach(el => barObs.observe(el.closest('section') || el));
+
+// ── Lightbox ─────────────────────────────────────────────────────────
+const thumbs  = Array.from(document.querySelectorAll('.gallery-thumb'));
+const lb      = document.getElementById('lightbox');
+const lbImg   = document.getElementById('lb-img');
+const lbCnt   = document.getElementById('lb-counter');
+const total   = thumbs.length;
+let current   = 0;
+
+function openLightbox(idx) {
+  current    = idx;
+  lbImg.src  = thumbs[idx].src;
+  lbImg.alt  = thumbs[idx].alt;
+  lbCnt.textContent = (idx + 1) + ' / ' + total;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+function navigate(dir) {
+  current   = (current + dir + total) % total;
+  lbImg.src = thumbs[current].src;
+  lbImg.alt = thumbs[current].alt;
+  lbCnt.textContent = (current + 1) + ' / ' + total;
+}
+
+thumbs.forEach(img => img.addEventListener('click', () => openLightbox(+img.dataset.idx)));
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lb-prev').addEventListener('click',  () => navigate(-1));
+document.getElementById('lb-next').addEventListener('click',  () => navigate(1));
+lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape')     closeLightbox();
+  if (e.key === 'ArrowLeft')  navigate(-1);
+  if (e.key === 'ArrowRight') navigate(1);
+});
+
+// ── Copy link ────────────────────────────────────────────────────────
+const copyBtn   = document.getElementById('copy-btn');
+const copyToast = document.getElementById('copy-toast');
+let toastTimer;
+copyBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    clearTimeout(toastTimer);
+    copyToast.classList.add('show');
+    toastTimer = setTimeout(() => copyToast.classList.remove('show'), 2200);
+  });
+});
+
+// ── Floor plan lightbox (click to zoom) ──────────────────────────────
+document.getElementById('floorplan-img').addEventListener('click', function() {
+  openLightboxSrc(this.src, 'Floor plan — 2714 Harvard Street');
+});
+function openLightboxSrc(src, cap) {
+  lbImg.src = src; lbImg.alt = cap || '';
+  lbCnt.textContent = cap || '';
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// ── Smooth scroll for anchor links ───────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+
+</body>
+</html>
