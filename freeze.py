@@ -37,9 +37,22 @@ def _fix_paths(build_dir="build"):
             html.write_text(fixed)
             print(f"  patched: {html}")
 
+######################################################################
+# Set CUSTOM_DOMAIN to your domain once you've bought it, e.g.:
+#   CUSTOM_DOMAIN = "2714harvardst.com"
+# Leave as None to keep the ricksterz.github.io/2714HarvardSt/ URL.
+######################################################################
+CUSTOM_DOMAIN = None
+
 if __name__ == "__main__":
     freezer.freeze()
     _fix_paths()
+
+    # Write CNAME file if a custom domain is set
+    if CUSTOM_DOMAIN:
+        pathlib.Path("build/CNAME").write_text(CUSTOM_DOMAIN + "\n")
+        print(f"  wrote CNAME → {CUSTOM_DOMAIN}")
+
     print("\n✓ Static build written to ./build/")
     print("  Next steps:")
     print("  1. cd build && python3 -m http.server 8000  ← test locally")
