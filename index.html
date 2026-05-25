@@ -261,19 +261,23 @@
     .btn-primary {
       display: inline-block; background: var(--accent); color: white;
       font-family: 'Inter', sans-serif; font-weight: 500;
-      font-size: 0.9375rem; letter-spacing: 0.04em;
-      padding: 14px 32px; border-radius: 3px; text-decoration: none;
+      font-size: 0.8125rem; letter-spacing: 0.04em;
+      padding: 11px 22px; border-radius: 3px; text-decoration: none;
       transition: background 0.18s;
     }
     .btn-primary:hover { background: var(--accent-h); }
     .btn-outline {
       display: inline-block; border: 1.5px solid rgba(255,255,255,0.55); color: white;
       font-family: 'Inter', sans-serif; font-weight: 500;
-      font-size: 0.9375rem; letter-spacing: 0.04em;
-      padding: 13px 30px; border-radius: 3px; text-decoration: none;
+      font-size: 0.8125rem; letter-spacing: 0.04em;
+      padding: 10px 20px; border-radius: 3px; text-decoration: none;
       transition: all 0.18s;
     }
     .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.1); }
+    @media (min-width: 640px) {
+      .btn-primary { font-size: 0.9375rem; padding: 14px 32px; }
+      .btn-outline  { font-size: 0.9375rem; padding: 13px 30px; }
+    }
 
     /* Dark-mode toggle + copy-link btn */
     #mode-btn, #copy-btn {
@@ -307,9 +311,12 @@
     /* Agent card */
     .agent-card {
       background: var(--bg-surface); border: 1px solid var(--rule);
-      border-radius: 3px; padding: 32px 36px;
-      display: flex; flex-wrap: wrap; gap: 24px; align-items: center;
+      border-radius: 3px; padding: 24px 20px;
+      display: flex; flex-wrap: wrap; gap: 20px; align-items: center;
       max-width: 640px;
+    }
+    @media (min-width: 640px) {
+      .agent-card { padding: 32px 36px; gap: 24px; }
     }
     .agent-avatar {
       width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
@@ -344,7 +351,7 @@
     </div>
     <div class="flex items-center gap-3">
       <span class="font-serif text-accent text-lg font-medium hidden sm:block">$575,000</span>
-      <a href="https://s.hartech.io/mRMv3T8Q4UWp" target="_blank" rel="noopener" class="btn-primary !py-2 !px-5 !text-sm hidden sm:inline-block">Schedule a Tour</a>
+      <a href="https://s.hartech.io/mRMv3T8Q4UWp" target="_blank" rel="noopener" class="btn-primary hidden sm:inline-block">Schedule a Tour</a>
       <button id="copy-btn" aria-label="Copy link to listing">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
@@ -649,7 +656,7 @@
       </div>
     </div>
     <a href="mailto:kasia.mccormick@compass.com?subject=Inquiry: 2714 Harvard Street&body=Hi Kasia,%0A%0AI'm interested in scheduling a showing for 2714 Harvard Street, Houston TX 77008.%0A%0APlease let me know your availability.%0A%0AThank you"
-       class="btn-primary !py-3 !px-6 !text-sm self-start whitespace-nowrap">
+       class="btn-primary self-start whitespace-nowrap">
       Contact Kasia
     </a>
   </div>
