@@ -312,11 +312,11 @@
     .agent-card {
       background: var(--bg-surface); border: 1px solid var(--rule);
       border-radius: 3px; padding: 24px 20px;
-      display: flex; flex-wrap: wrap; gap: 20px; align-items: center;
+      display: flex; flex-direction: column; gap: 20px;
       max-width: 640px;
     }
     @media (min-width: 640px) {
-      .agent-card { padding: 32px 36px; gap: 24px; }
+      .agent-card { flex-direction: row; align-items: center; padding: 32px 36px; gap: 24px; }
     }
     .agent-avatar {
       width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
@@ -643,27 +643,25 @@
   <div class="section-rule mb-6 reveal"></div>
   <h2 class="font-serif text-3xl md:text-4xl font-normal text-accent mb-10 reveal">Seller's Agent</h2>
   <div class="agent-card reveal">
-    <div class="agent-avatar">KM</div>
-    <div class="flex flex-col gap-1 flex-1 min-w-0">
-      <p class="font-serif text-xl font-normal" style="color:var(--text)">Kasia McCormick, REALTOR®</p>
-      <p class="font-sans text-xs tracking-[0.12em] uppercase mb-3" style="color:var(--text-muted)">Compass RE Texas, LLC</p>
-      <div class="flex flex-wrap gap-x-6 gap-y-2">
-        <a href="tel:7733320087" class="agent-link">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.5 2 2 0 0 1 3.55 1.5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.22 6.22l1.78-1.78a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          (773) 332-0087
-        </a>
-        <a href="mailto:kasia.mccormick@compass.com" class="agent-link">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          kasia.mccormick@compass.com
-        </a>
-        <a href="https://kasiamccormick.com/" target="_blank" rel="noopener" class="agent-link">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          kasiamccormick.com
-        </a>
+    <div style="display:flex; align-items:center; gap:16px; flex:1; min-width:0;">
+      <div class="agent-avatar" style="flex-shrink:0;">KM</div>
+      <div class="flex flex-col gap-1 min-w-0">
+        <p class="font-serif text-xl font-normal" style="color:var(--text)">Kasia McCormick</p>
+        <p class="font-sans text-xs tracking-[0.12em] uppercase mb-2" style="color:var(--text-muted)">REALTOR® · Compass RE Texas, LLC</p>
+        <div class="flex flex-wrap gap-x-5 gap-y-1.5">
+          <a href="tel:7733320087" class="agent-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.5 2 2 0 0 1 3.55 1.5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.22 6.22l1.78-1.78a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (773) 332-0087
+          </a>
+          <a href="mailto:kasia.mccormick@compass.com" class="agent-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            kasia.mccormick@compass.com
+          </a>
+        </div>
       </div>
     </div>
     <a href="mailto:kasia.mccormick@compass.com?subject=Inquiry: 2714 Harvard Street&body=Hi Kasia,%0A%0AI'm interested in scheduling a showing for 2714 Harvard Street, Houston TX 77008.%0A%0APlease let me know your availability.%0A%0AThank you"
-       class="btn-primary self-start whitespace-nowrap">
+       class="btn-primary whitespace-nowrap" style="align-self:center;">
       Contact Kasia
     </a>
   </div>
