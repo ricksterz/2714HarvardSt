@@ -42,7 +42,7 @@ databricks apps deploy harvard-st-2714 \
 ### First-time setup
 
 **1. Create the GitHub repo**
-Go to https://github.com/new and create a repo named **`harvard`** (public).
+Go to https://github.com/new and create a repo named **`2714HarvardSt`** (public).
 
 **2. Add the remote and push source**
 ```bash
