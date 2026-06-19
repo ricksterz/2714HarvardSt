@@ -3,6 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Security: Content-Security-Policy restricts where scripts/styles/frames/images may load from.
+       Note: frame-ancestors / HSTS / X-Frame-Options can't be delivered via <meta> and require real
+       HTTP headers (not available on GitHub Pages static hosting). -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; frame-src https://www.google.com https://maps.google.com" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
   <title>2714 Harvard Street · Houston Heights</title>
   <meta name="description" content="4 bed / 4.5 bath · 2,819 sf · Built 2018 · Sunset Heights gated community · Houston TX 77008" />
 
@@ -27,23 +34,10 @@
     gtag('js', new Date());
     gtag('config', 'G-8ZLHS5C9YB');
   </script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/static/css/tailwind.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            serif: ['Playfair Display', 'Georgia', 'serif'],
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-          },
-        },
-      },
-    }
-  </script>
   <style>
     /* ── Color tokens ───────────────────────────────── */
     :root {
