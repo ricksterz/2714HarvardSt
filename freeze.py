@@ -7,6 +7,8 @@ Usage:
 Output: ./build/   ← drag-and-drop to Netlify, or push to gh-pages branch.
 """
 
+import pathlib
+
 from app import app
 from flask_frozen import Freezer
 
@@ -23,7 +25,7 @@ def _fix_paths(build_dir="build"):
     which breaks GitHub Pages subdirectory hosting. Strip the slash from
     all three forms so every asset resolves relative to index.html.
     """
-    import pathlib, re
+    import re
     for html in pathlib.Path(build_dir).rglob("*.html"):
         text = html.read_text()
         # src="/static/..."  →  src="static/..."

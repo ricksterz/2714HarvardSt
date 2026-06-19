@@ -42,7 +42,7 @@ databricks apps deploy harvard-st-2714 \
 ### First-time setup
 
 **1. Create the GitHub repo**
-Go to https://github.com/new and create a repo named **`harvard`** (public).
+Go to https://github.com/new and create a repo named **`2714HarvardSt`** (public).
 
 **2. Add the remote and push source**
 ```bash
@@ -109,6 +109,42 @@ Search `templates/index.html` for the current price and replace both occurrences
 
 ---
 
+## Styling (Tailwind)
+
+Tailwind is **compiled to a static file** (`static/css/tailwind.css`) instead of
+loaded from the dev-only CDN — this removes a third-party script and improves
+load time and supply-chain safety.
+
+> **Important:** if you add or change any Tailwind utility classes in
+> `templates/index.html`, you must recompile the CSS or the new classes won't be
+> styled:
+>
+> ```bash
+> npx tailwindcss@3.4.17 -c ./tailwind.config.js \
+>   -i ./tailwind.input.css -o ./static/css/tailwind.css --minify
+> ```
+>
+> Custom CSS (color tokens, dark mode, lightbox, etc.) lives in the `<style>`
+> block of `index.html` and does not require a rebuild.
+
+---
+
+## Security
+
+- **Content-Security-Policy** + `referrer` are set via `<meta>` tags in
+  `index.html`, restricting scripts/styles/frames/images to the known external
+  origins (Google Tag Manager, Google Fonts, Google Maps). Note: GitHub Pages
+  serves static files only and cannot send custom HTTP headers, so header-only
+  controls (HSTS, `X-Frame-Options`, CSP `frame-ancestors`) aren't available on
+  the public host.
+- **Pinned dependencies** in `requirements.txt` for reproducible builds.
+- **CI** (`.github/workflows/ci.yml`) runs `pip-audit` (dependency CVEs),
+  `gitleaks` (committed-secret scan), and verifies the `freeze.py` build.
+- **Dependabot** (`.github/dependabot.yml`) opens weekly update PRs for pip and
+  GitHub Actions dependencies.
+
+---
+
 ## Project structure
 
 ```
@@ -116,10 +152,18 @@ harvard-st-listing/
 ├── app.py              Flask entrypoint — reads PORT env var
 ├── app.yaml            Databricks Apps config
 ├── freeze.py           Builds static site to ./build/ for GitHub Pages
-├── requirements.txt
+├── requirements.txt    Pinned Python dependencies
+├── tailwind.config.js  Tailwind build config
+├── tailwind.input.css  Tailwind entry (@tailwind directives)
+├── .github/
+│   ├── dependabot.yml  Weekly dependency update PRs
+│   └── workflows/
+│       └── ci.yml      pip-audit + gitleaks + build verification
 ├── templates/
-│   └── index.html      Single-page site (Tailwind CDN, vanilla JS)
+│   └── index.html      Single-page site (compiled Tailwind, vanilla JS)
 ├── static/
+│   ├── css/
+│   │   └── tailwind.css  Compiled Tailwind (do not edit — regenerate)
 │   └── img/
 │       ├── img_01.jpg … img_32.jpg   2400px listing photos
 │       ├── floorplan.png             Rendered floor plan (2400px)
