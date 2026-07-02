@@ -40,11 +40,11 @@ def _fix_paths(build_dir="build"):
             print(f"  patched: {html}")
 
 ######################################################################
-# Set CUSTOM_DOMAIN to your domain once you've bought it, e.g.:
-#   CUSTOM_DOMAIN = "2714harvardst.com"
-# Leave as None to keep the ricksterz.github.io/2714HarvardSt/ URL.
+# Custom domain is live — this writes build/CNAME on every rebuild so it
+# survives future deploys instead of relying on a hand-edited file on the
+# gh-pages branch. Set to None to fall back to ricksterz.github.io/2714HarvardSt/.
 ######################################################################
-CUSTOM_DOMAIN = None
+CUSTOM_DOMAIN = "2714harvardst.com"
 
 if __name__ == "__main__":
     freezer.freeze()
