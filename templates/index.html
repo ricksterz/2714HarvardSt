@@ -4,26 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Set dark mode before first paint to avoid a light-theme flash for dark-mode users. -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+
   <!-- Security: Content-Security-Policy restricts where scripts/styles/frames/images may load from.
        Note: frame-ancestors / HSTS / X-Frame-Options can't be delivered via <meta> and require real
        HTTP headers (not available on GitHub Pages static hosting). -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; frame-src https://www.google.com https://maps.google.com" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-  <title>2714 Harvard Street · Houston Heights</title>
-  <meta name="description" content="4 bed / 4.5 bath · 2,819 sf · Built 2018 · Sunset Heights gated community · Houston TX 77008" />
+  <title>2714 Harvard Street · Houston Heights · Pending</title>
+  <meta name="description" content="Pending sale · 4 bed / 4.5 bath · 2,819 sf · Built 2018 · Sunset Heights gated community · Houston TX 77008" />
 
   <!-- Open Graph / social sharing -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="2714 Harvard Street · Houston Heights — $575,000" />
-  <meta property="og:description" content="4 bed / 4.5 bath · 2,819 sf · Built 2018 · Sunset Heights gated community · Houston TX 77008" />
+  <meta property="og:title" content="2714 Harvard Street · Houston Heights — $549,000 (Pending)" />
+  <meta property="og:description" content="Pending sale · 4 bed / 4.5 bath · 2,819 sf · Built 2018 · Sunset Heights gated community · Houston TX 77008" />
   <meta property="og:url" content="https://ricksterz.github.io/2714HarvardSt/" />
   <meta property="og:image" content="https://ricksterz.github.io/2714HarvardSt/static/img/img_01.jpg" />
   <meta property="og:site_name" content="2714 Harvard Street" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@2714HarvardSt" />
-  <meta name="twitter:title" content="2714 Harvard Street · Houston Heights — $575,000" />
-  <meta name="twitter:description" content="4 bed / 4.5 bath · 2,819 sf · Built 2018 · Sunset Heights gated community · Houston TX 77008" />
+  <meta name="twitter:title" content="2714 Harvard Street · Houston Heights — $549,000 (Pending)" />
+  <meta name="twitter:description" content="Pending sale · 4 bed / 4.5 bath · 2,819 sf · Built 2018 · Sunset Heights gated community · Houston TX 77008" />
   <meta name="twitter:image" content="https://ricksterz.github.io/2714HarvardSt/static/img/img_01.jpg" />
 
   <!-- Google Analytics 4 · Property: 538590873 · Measurement ID: G-8ZLHS5C9YB -->
@@ -53,6 +63,8 @@
       --rule:        #DDD8CE;
       --hero-over:   rgba(0,0,0,0.50);
       --hero-over2:  rgba(0,0,0,0.10);
+      --status-bg:   #F4E3C1;
+      --status-text: #7A4E12;
     }
     html.dark {
       --bg:          #0E1219;
@@ -67,6 +79,8 @@
       --rule:        #253040;
       --hero-over:   rgba(0,0,0,0.64);
       --hero-over2:  rgba(0,0,0,0.20);
+      --status-bg:   #3A2E12;
+      --status-text: #E8C77A;
     }
 
     /* Apply tokens globally */
@@ -141,6 +155,15 @@
 
     /* Stats divider */
     .stat-divider { width: 1px; height: 36px; background: var(--rule); }
+
+    /* Status badge (e.g. Pending) */
+    .status-badge {
+      display: inline-flex; align-items: center;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.6875rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 999px;
+      background: var(--status-bg); color: var(--status-text);
+    }
 
     /* Feature tag */
     .feature-tag {
@@ -240,8 +263,9 @@
       <p class="font-sans text-[11px] tracking-wide" style="color:var(--text-muted)">Houston Heights · 77008</p>
     </div>
     <div class="flex items-center gap-3">
-      <span class="font-serif text-accent text-lg font-medium hidden sm:block">$575,000</span>
-      <a href="https://s.hartech.io/mRMv3T8Q4UWp" target="_blank" rel="noopener" class="btn-primary !py-2 !px-5 !text-sm hidden sm:inline-block">Schedule a Tour</a>
+      <span class="status-badge">Pending</span>
+      <span class="font-serif text-accent text-lg font-medium hidden sm:block">$549,000</span>
+      <a href="#agent" class="btn-primary !py-2 !px-5 !text-sm hidden sm:inline-block">Contact Agent</a>
       <button id="copy-btn" aria-label="Copy link to listing">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
@@ -262,9 +286,12 @@
   <div class="relative z-10 flex flex-col justify-end h-full px-6 pb-12 md:px-16 md:pb-16 max-w-screen-xl mx-auto">
     <p class="font-sans text-white/70 text-xs tracking-[0.18em] uppercase mb-3">Houston Heights · Sunset Heights · 77008</p>
     <h1 class="font-serif text-white text-4xl md:text-6xl lg:text-7xl font-normal leading-tight mb-4">2714 Harvard Street</h1>
-    <p class="font-serif text-white/90 text-2xl md:text-3xl italic mb-8">$575,000</p>
+    <div class="flex items-center gap-3 mb-8">
+      <p class="font-serif text-white/90 text-2xl md:text-3xl italic">$549,000</p>
+      <span class="status-badge">Pending</span>
+    </div>
     <div class="flex flex-col sm:flex-row gap-3">
-      <a href="https://s.hartech.io/mRMv3T8Q4UWp" target="_blank" rel="noopener" class="btn-primary text-center">Schedule a Tour</a>
+      <a href="#agent" class="btn-primary text-center">Contact Agent</a>
       <a href="#gallery" class="btn-outline text-center">View Photos</a>
     </div>
   </div>
@@ -300,7 +327,7 @@
       </div>
       <div class="stat-divider hidden md:block mx-2"></div>
       <div class="flex flex-col items-center px-5 md:px-8">
-        <span class="font-serif text-2xl md:text-3xl text-accent font-medium">$204</span>
+        <span class="font-serif text-2xl md:text-3xl text-accent font-medium">$195</span>
         <span class="font-sans text-[11px] tracking-[0.12em] uppercase mt-0.5" style="color:var(--text-muted)">Per Sq Ft</span>
       </div>
     </div>
@@ -319,7 +346,7 @@
       Tech includes EV charger, hardwired ethernet, zoned AC per floor, smart thermostats, Ring entry, and tankless hot water. Inside: 12-ft ceilings, Bosch appliances, quartz counters, gas fireplace, and a primary suite with marble shower, soaking tub, and walk-in closet.
     </p>
     <p class="font-sans text-base md:text-lg leading-relaxed" style="color:var(--text)">
-      The fourth-floor game room opens to an oversized rooftop terrace; the second-floor balcony has a gas grill connection. Gated but facing streetside on Harvard, allowing for easy navigation. Walk to Heights retail and dining; zoned to A-rated Helms Elementary. Newer than nearly every comparable and priced at <strong>$204/sf in a $235/sf submarket.</strong>
+      The fourth-floor game room opens to an oversized rooftop terrace; the second-floor balcony has a gas grill connection. Gated but facing streetside on Harvard, allowing for easy navigation. Walk to Heights retail and dining; zoned to A-rated Helms Elementary. Newer than nearly every comparable and priced at <strong>$195/sf in a $235/sf submarket.</strong>
     </p>
   </div>
 </section>
@@ -332,9 +359,9 @@
       <div>
         <div class="flex justify-between items-baseline mb-1.5">
           <span class="font-sans text-sm" style="color:var(--text)">This home</span>
-          <span class="font-serif text-accent font-medium">$204 / sf</span>
+          <span class="font-serif text-accent font-medium">$195 / sf</span>
         </div>
-        <div class="value-bar-track"><div class="value-bar-fill" data-width="87" style="width:0%"></div></div>
+        <div class="value-bar-track"><div class="value-bar-fill" data-width="83" style="width:0%"></div></div>
       </div>
       <div>
         <div class="flex justify-between items-baseline mb-1.5">
@@ -344,7 +371,7 @@
         <div class="value-bar-track"><div class="value-bar-fill" style="width:0%;opacity:0.35" data-width="100"></div></div>
       </div>
     </div>
-    <p class="font-sans text-xs mt-5" style="color:var(--text-muted)">13% below the 77008 submarket average — newer construction, same neighborhood.</p>
+    <p class="font-sans text-xs mt-5" style="color:var(--text-muted)">17% below the 77008 submarket average — newer construction, same neighborhood.</p>
   </div>
 </section>
 
@@ -522,7 +549,7 @@
 </section>
 
 <!-- ─── AGENT CARD ────────────────────────────────────────────────────── -->
-<section class="max-w-screen-xl mx-auto px-6 md:px-16 pb-16 md:pb-24">
+<section id="agent" class="max-w-screen-xl mx-auto px-6 md:px-16 pb-16 md:pb-24">
   <div class="section-rule mb-6 reveal"></div>
   <h2 class="font-serif text-3xl md:text-4xl font-normal text-accent mb-10 reveal">Your Agent</h2>
   <div class="agent-card reveal">
@@ -545,7 +572,7 @@
         </a>
       </div>
     </div>
-    <a href="mailto:kasia.mccormick@compass.com?subject=Inquiry: 2714 Harvard Street&body=Hi Kasia,%0A%0AI'm interested in scheduling a showing for 2714 Harvard Street, Houston TX 77008.%0A%0APlease let me know your availability.%0A%0AThank you"
+    <a href="mailto:kasia.mccormick@compass.com?subject=Inquiry: 2714 Harvard Street (Backup Offer)&body=Hi Kasia,%0A%0AI understand 2714 Harvard Street, Houston TX 77008 is under contract. I'd like more information / to be considered as a backup offer.%0A%0APlease let me know next steps.%0A%0AThank you"
        class="btn-primary !py-3 !px-6 !text-sm self-start whitespace-nowrap">
       Contact Kasia
     </a>
@@ -556,14 +583,14 @@
 <section style="background:var(--accent);" class="py-16 md:py-24">
   <div class="max-w-screen-xl mx-auto px-6 md:px-16 text-center">
     <p class="font-sans text-white/60 text-xs tracking-[0.18em] uppercase mb-4">2714 Harvard Street · Houston Heights · TX 77008</p>
-    <h2 class="font-serif text-white text-3xl md:text-5xl font-normal mb-4">Ready to see it in person?</h2>
+    <h2 class="font-serif text-white text-3xl md:text-5xl font-normal mb-4">This home is under contract.</h2>
     <p class="font-sans text-white/70 text-base md:text-lg mb-10 max-w-lg mx-auto">
-      Schedule a private showing through the HAR listing, or reach out to the listing agent directly.
+      The sale hasn't closed yet — reach out to the listing agent for details or backup offer inquiries.
     </p>
-    <a href="https://s.hartech.io/mRMv3T8Q4UWp" target="_blank" rel="noopener"
+    <a href="#agent"
        style="background:var(--bg);color:var(--accent);"
        class="inline-block font-sans font-medium text-[0.9375rem] tracking-wider px-10 py-4 rounded-sm hover:opacity-90 transition-opacity">
-      Request a Showing on HAR
+      Contact the Listing Agent
     </a>
   </div>
 </section>
@@ -571,7 +598,7 @@
 <!-- ─── FOOTER ────────────────────────────────────────────────────────── -->
 <footer style="background:var(--bg-footer);" class="py-10">
   <div class="max-w-screen-xl mx-auto px-6 md:px-16 flex flex-col md:flex-row items-center justify-between gap-6">
-    <p class="font-sans text-white/40 text-xs tracking-wide">2714 Harvard Street · Houston, TX 77008 · Listed for sale</p>
+    <p class="font-sans text-white/40 text-xs tracking-wide">2714 Harvard Street · Houston, TX 77008 · Pending sale</p>
     <nav class="flex flex-wrap gap-x-6 gap-y-2 justify-center">
       <a href="https://s.hartech.io/mRMv3T8Q4UWp" target="_blank" rel="noopener" class="font-sans text-white/90 hover:text-white font-medium text-xs tracking-wide transition-colors">HAR</a>
       <a href="https://www.redfin.com/TX/Houston/2714-Harvard-St-77008/home/52560213" target="_blank" rel="noopener" class="font-sans text-white/50 hover:text-white/90 text-xs tracking-wide transition-colors">Redfin</a>
@@ -593,10 +620,6 @@
 // ── Dark mode ────────────────────────────────────────────────────────
 const html    = document.documentElement;
 const modeBtn = document.getElementById('mode-btn');
-const saved   = localStorage.getItem('theme');
-if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-  html.classList.add('dark');
-}
 function syncIcon() {
   modeBtn.textContent = html.classList.contains('dark') ? '☀️' : '🌙';
 }
@@ -639,19 +662,30 @@ const thumbs  = Array.from(document.querySelectorAll('.gallery-thumb'));
 const lb      = document.getElementById('lightbox');
 const lbImg   = document.getElementById('lb-img');
 const lbCnt   = document.getElementById('lb-counter');
+const lbPrev  = document.getElementById('lb-prev');
+const lbNext  = document.getElementById('lb-next');
 const total   = thumbs.length;
 let current   = 0;
+let singleMode = false; // true when showing a non-gallery image (e.g. floor plan) — disables prev/next
+
+function setNavVisible(visible) {
+  lbPrev.style.display = visible ? '' : 'none';
+  lbNext.style.display = visible ? '' : 'none';
+}
 
 function openLightbox(idx) {
+  singleMode = false;
   current    = idx;
   lbImg.src  = thumbs[idx].src;
   lbImg.alt  = thumbs[idx].alt;
   lbCnt.textContent = (idx + 1) + ' / ' + total;
+  setNavVisible(true);
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 function closeLightbox() { lb.classList.remove('open'); document.body.style.overflow = ''; }
 function navigate(dir) {
+  if (singleMode) return;
   current   = (current + dir + total) % total;
   lbImg.src = thumbs[current].src;
   lbImg.alt = thumbs[current].alt;
@@ -660,8 +694,8 @@ function navigate(dir) {
 
 thumbs.forEach(img => img.addEventListener('click', () => openLightbox(+img.dataset.idx)));
 document.getElementById('lb-close').addEventListener('click', closeLightbox);
-document.getElementById('lb-prev').addEventListener('click',  () => navigate(-1));
-document.getElementById('lb-next').addEventListener('click',  () => navigate(1));
+lbPrev.addEventListener('click',  () => navigate(-1));
+lbNext.addEventListener('click',  () => navigate(1));
 lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
 document.addEventListener('keydown', e => {
   if (!lb.classList.contains('open')) return;
@@ -687,8 +721,10 @@ document.getElementById('floorplan-img').addEventListener('click', function() {
   openLightboxSrc(this.src, 'Floor plan — 2714 Harvard Street');
 });
 function openLightboxSrc(src, cap) {
+  singleMode = true;
   lbImg.src = src; lbImg.alt = cap || '';
   lbCnt.textContent = cap || '';
+  setNavVisible(false);
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
