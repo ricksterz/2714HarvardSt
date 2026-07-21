@@ -260,6 +260,22 @@
     .value-bar-track { background: var(--rule); border-radius: 4px; height: 8px; overflow: hidden; }
     .value-bar-fill  { height: 100%; border-radius: 4px; background: var(--accent); transition: width 1.2s cubic-bezier(.4,0,.2,1); }
 
+    /* Chart tooltips */
+    .chart-point { cursor: pointer; transition: r 0.12s ease; }
+    .chart-point:hover { r: 6; }
+    #chart-tooltip {
+      position: fixed; z-index: 60; pointer-events: none;
+      background: var(--bg-tag); color: var(--text);
+      border: 1px solid var(--rule); border-radius: 4px;
+      padding: 6px 10px; font-family: 'Inter', sans-serif;
+      font-size: 0.75rem; line-height: 1.4; white-space: nowrap;
+      opacity: 0; transform: translateY(4px); transition: opacity 0.12s ease, transform 0.12s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    #chart-tooltip.show { opacity: 1; transform: translateY(0); }
+    #chart-tooltip .tip-date  { color: var(--text-muted); font-size: 0.6875rem; }
+    #chart-tooltip .tip-value { font-weight: 600; }
+
     /* Buttons */
     .btn-primary {
       display: inline-block; background: var(--accent); color: white;
@@ -368,6 +384,9 @@
 
 <!-- Copy-link toast -->
 <div id="copy-toast">Link copied!</div>
+
+<!-- Chart hover tooltip -->
+<div id="chart-tooltip"></div>
 
 <!-- ─── HERO ─────────────────────────────────────────────────────────── -->
 <section id="hero" class="hero-img relative w-full" style="height:90vh;min-height:520px;max-height:900px;">
@@ -503,6 +522,19 @@
         <circle cx="660" cy="129.8" r="5" fill="var(--accent)" />
         <circle cx="660" cy="129.8" r="9" fill="none" stroke="var(--accent)" stroke-width="1" opacity="0.35" />
 
+        <!-- invisible hit areas for hover tooltips -->
+        <circle class="chart-point" cx="40" cy="149.5" r="10" fill="transparent" data-tip-date="Jan 9, 2020" data-tip-label="Listed for sale (builder)" data-tip-value="$520,000" />
+        <circle class="chart-point" cx="102" cy="163.3" r="10" fill="transparent" data-tip-date="May 22, 2020" data-tip-label="Price change" data-tip-value="$499,900" />
+        <circle class="chart-point" cx="164" cy="161.5" r="10" fill="transparent" data-tip-date="Jan 13, 2021" data-tip-label="Sold (purchased)" data-tip-value="$502,505" />
+        <circle class="chart-point" cx="226" cy="27.5" r="10" fill="transparent" data-tip-date="Oct 17, 2024" data-tip-label="Listed for sale" data-tip-value="$699,000" />
+        <circle class="chart-point" cx="288" cy="60.9" r="10" fill="transparent" data-tip-date="Oct 16, 2025" data-tip-label="Price change" data-tip-value="$650,000" />
+        <circle class="chart-point" cx="350" cy="78.0" r="10" fill="transparent" data-tip-date="Feb 23, 2026" data-tip-label="Price change" data-tip-value="$625,000" />
+        <circle class="chart-point" cx="412" cy="95.7" r="10" fill="transparent" data-tip-date="Apr 6, 2026" data-tip-label="Price change" data-tip-value="$599,000" />
+        <circle class="chart-point" cx="474" cy="112.1" r="10" fill="transparent" data-tip-date="May 28, 2026" data-tip-label="Price change" data-tip-value="$575,000" />
+        <circle class="chart-point" cx="536" cy="129.8" r="10" fill="transparent" data-tip-date="Jun 23, 2026" data-tip-label="Price change" data-tip-value="$549,000" />
+        <circle class="chart-point" cx="598" cy="129.8" r="10" fill="transparent" data-tip-date="Jul 1, 2026" data-tip-label="Went under contract" data-tip-value="$549,000" />
+        <circle class="chart-point" cx="660" cy="129.8" r="12" fill="transparent" data-tip-date="Jul 16, 2026" data-tip-label="Pending — option period cleared" data-tip-value="$549,000" />
+
         <text x="226" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-muted)">$699,000 asking (2024)</text>
         <text x="660" y="118" text-anchor="end" font-size="13" font-weight="600" fill="var(--accent)">$549,000 · Pending</text>
 
@@ -525,6 +557,13 @@
         <circle cx="350" cy="29.2" r="3" fill="#3d9188" />
         <circle cx="495" cy="85.9" r="3" fill="#3d9188" />
         <circle cx="640" cy="69.6" r="4" fill="#3d9188" />
+
+        <!-- invisible hit areas for hover tooltips -->
+        <circle class="chart-point" cx="60" cy="52.9" r="10" fill="transparent" data-tip-date="2022" data-tip-label="HCAD appraised value" data-tip-value="$519,462" />
+        <circle class="chart-point" cx="205" cy="42.2" r="10" fill="transparent" data-tip-date="2023" data-tip-label="HCAD appraised value" data-tip-value="$526,096" />
+        <circle class="chart-point" cx="350" cy="29.2" r="10" fill="transparent" data-tip-date="2024" data-tip-label="HCAD appraised value" data-tip-value="$534,214" />
+        <circle class="chart-point" cx="495" cy="85.9" r="10" fill="transparent" data-tip-date="2025" data-tip-label="HCAD appraised value" data-tip-value="$498,814" />
+        <circle class="chart-point" cx="640" cy="69.6" r="12" fill="transparent" data-tip-date="2026 (pending ARB)" data-tip-label="HCAD appraised value" data-tip-value="$509,000" />
 
         <text x="350" y="18" text-anchor="middle" font-size="10" font-weight="600" fill="#3d9188">$534,214 peak (2024)</text>
         <text x="640" y="60" text-anchor="end" font-size="11" font-weight="600" fill="#3d9188">$509,000</text>
@@ -992,6 +1031,24 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     const target = document.querySelector(a.getAttribute('href'));
     if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   });
+});
+
+// ── Chart hover tooltips ──────────────────────────────────────────────
+const chartTip = document.getElementById('chart-tooltip');
+document.querySelectorAll('.chart-point').forEach(pt => {
+  pt.addEventListener('mouseenter', () => {
+    chartTip.innerHTML =
+      '<div class="tip-date">' + pt.dataset.tipDate + '</div>' +
+      pt.dataset.tipLabel + ' — <span class="tip-value">' + pt.dataset.tipValue + '</span>';
+    chartTip.classList.add('show');
+  });
+  pt.addEventListener('mousemove', (e) => {
+    const tipW = chartTip.offsetWidth;
+    const flip = e.clientX + 14 + tipW > window.innerWidth - 8;
+    chartTip.style.left = (flip ? e.clientX - tipW - 14 : e.clientX + 14) + 'px';
+    chartTip.style.top  = (e.clientY + 14) + 'px';
+  });
+  pt.addEventListener('mouseleave', () => chartTip.classList.remove('show'));
 });
 </script>
 
