@@ -510,58 +510,69 @@
         <text x="660" y="153" text-anchor="end" font-size="9" fill="var(--text-muted)" opacity="0.8">purchased at $502,505</text>
 
         <!-- HCAD appraised value (drawn first, sits behind the price line) -->
-        <polyline points="180,149.9 196,145.4 213,139.8 239,164.0 325,157.0"
+        <polyline points="156.6,149.9 170.4,145.4 184.1,139.8 231.1,164.0 380.5,157.0"
           fill="none" stroke="#3d9188" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="4,3" />
-        <circle cx="180" cy="149.9" r="3" fill="#3d9188" />
-        <circle cx="196" cy="145.4" r="3" fill="#3d9188" />
-        <circle cx="213" cy="139.8" r="3" fill="#3d9188" />
-        <circle cx="239" cy="164.0" r="3" fill="#3d9188" />
-        <circle cx="325" cy="157.0" r="4" fill="#3d9188" />
-        <circle class="chart-point" cx="180" cy="149.9" r="6" fill="transparent" data-tip-date="2022" data-tip-label="HCAD appraised value" data-tip-value="$519,462" />
-        <circle class="chart-point" cx="196" cy="145.4" r="6" fill="transparent" data-tip-date="2023" data-tip-label="HCAD appraised value" data-tip-value="$526,096" />
-        <circle class="chart-point" cx="213" cy="139.8" r="6" fill="transparent" data-tip-date="2024" data-tip-label="HCAD appraised value" data-tip-value="$534,214" />
-        <circle class="chart-point" cx="239" cy="164.0" r="6" fill="transparent" data-tip-date="2025" data-tip-label="HCAD appraised value" data-tip-value="$498,814" />
-        <circle class="chart-point" cx="325" cy="157.0" r="12" fill="transparent" data-tip-date="2026 (pending ARB)" data-tip-label="HCAD appraised value" data-tip-value="$509,000" />
+        <circle cx="156.6" cy="149.9" r="3" fill="#3d9188" />
+        <circle cx="170.4" cy="145.4" r="3" fill="#3d9188" />
+        <circle cx="184.1" cy="139.8" r="3" fill="#3d9188" />
+        <circle cx="231.1" cy="164.0" r="3" fill="#3d9188" />
+        <circle cx="380.5" cy="157.0" r="4" fill="#3d9188" />
+        <circle class="chart-point" cx="156.6" cy="149.9" r="6" fill="transparent" data-tip-date="2022" data-tip-label="HCAD appraised value" data-tip-value="$519,462" />
+        <circle class="chart-point" cx="170.4" cy="145.4" r="6" fill="transparent" data-tip-date="2023" data-tip-label="HCAD appraised value" data-tip-value="$526,096" />
+        <circle class="chart-point" cx="184.1" cy="139.8" r="6" fill="transparent" data-tip-date="2024" data-tip-label="HCAD appraised value" data-tip-value="$534,214" />
+        <circle class="chart-point" cx="231.1" cy="164.0" r="6" fill="transparent" data-tip-date="2025" data-tip-label="HCAD appraised value" data-tip-value="$498,814" />
+        <circle class="chart-point" cx="380.5" cy="157.0" r="12" fill="transparent" data-tip-date="2026 (pending ARB)" data-tip-label="HCAD appraised value" data-tip-value="$509,000" />
 
-        <!-- Listed / sale price (drawn on top) -->
-        <polyline points="40,149.5 102,163.3 164,161.5 226,27.5 288,60.9 350,78.0 412,95.7 474,112.1 536,129.8 598,129.8 660,129.8"
+        <!-- Listed / sale price — segment 1: builder list through 2024 relist -->
+        <polyline points="40.0,149.5 91.7,163.3 143.3,161.5 195.0,27.5"
+          fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+        <!-- Listed / sale price — off-market / private-listing gap (Feb–Oct 2025) -->
+        <polyline points="195.0,27.5 246.7,27.5 298.3,27.5 350.0,60.9"
+          fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="3,3" opacity="0.6" />
+        <!-- Listed / sale price — segment 2: 2025 relist through now -->
+        <polyline points="350.0,60.9 401.7,78.0 453.3,95.7 505.0,112.1 556.7,129.8 608.3,129.8 660.0,129.8"
           fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
 
-        <circle cx="40" cy="149.5" r="3" fill="var(--accent)" />
-        <circle cx="102" cy="163.3" r="3" fill="var(--accent)" />
-        <circle cx="164" cy="161.5" r="4" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.5" />
-        <circle cx="226" cy="27.5" r="3" fill="var(--accent)" />
-        <circle cx="288" cy="60.9" r="3" fill="var(--accent)" />
-        <circle cx="350" cy="78.0" r="3" fill="var(--accent)" />
-        <circle cx="412" cy="95.7" r="3" fill="var(--accent)" />
-        <circle cx="474" cy="112.1" r="3" fill="var(--accent)" />
-        <circle cx="536" cy="129.8" r="3" fill="var(--accent)" />
-        <circle cx="598" cy="129.8" r="3" fill="var(--accent)" />
-        <circle cx="660" cy="129.8" r="5" fill="var(--accent)" />
-        <circle cx="660" cy="129.8" r="9" fill="none" stroke="var(--accent)" stroke-width="1" opacity="0.35" />
+        <circle cx="40.0" cy="149.5" r="3" fill="var(--accent)" />
+        <circle cx="91.7" cy="163.3" r="3" fill="var(--accent)" />
+        <circle cx="143.3" cy="161.5" r="4" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.5" />
+        <circle cx="195.0" cy="27.5" r="3" fill="var(--accent)" />
+        <circle cx="246.7" cy="27.5" r="3" fill="var(--bg-surface)" stroke="var(--text-muted)" stroke-width="1.5" />
+        <circle cx="298.3" cy="27.5" r="3" fill="var(--bg-surface)" stroke="var(--text-muted)" stroke-width="1.5" />
+        <circle cx="350.0" cy="60.9" r="3" fill="var(--accent)" />
+        <circle cx="401.7" cy="78.0" r="3" fill="var(--accent)" />
+        <circle cx="453.3" cy="95.7" r="3" fill="var(--accent)" />
+        <circle cx="505.0" cy="112.1" r="3" fill="var(--accent)" />
+        <circle cx="556.7" cy="129.8" r="3" fill="var(--accent)" />
+        <circle cx="608.3" cy="129.8" r="3" fill="var(--accent)" />
+        <circle cx="660.0" cy="129.8" r="5" fill="var(--accent)" />
+        <circle cx="660.0" cy="129.8" r="9" fill="none" stroke="var(--accent)" stroke-width="1" opacity="0.35" />
 
         <!-- invisible hit areas for hover tooltips -->
-        <circle class="chart-point" cx="40" cy="149.5" r="10" fill="transparent" data-tip-date="Jan 9, 2020" data-tip-label="Listed for sale (builder)" data-tip-value="$520,000" />
-        <circle class="chart-point" cx="102" cy="163.3" r="10" fill="transparent" data-tip-date="May 22, 2020" data-tip-label="Price change" data-tip-value="$499,900" />
-        <circle class="chart-point" cx="164" cy="161.5" r="10" fill="transparent" data-tip-date="Jan 13, 2021" data-tip-label="Sold (purchased)" data-tip-value="$502,505" />
-        <circle class="chart-point" cx="226" cy="27.5" r="10" fill="transparent" data-tip-date="Oct 17, 2024" data-tip-label="Listed for sale" data-tip-value="$699,000" />
-        <circle class="chart-point" cx="288" cy="60.9" r="10" fill="transparent" data-tip-date="Oct 16, 2025" data-tip-label="Price change" data-tip-value="$650,000" />
-        <circle class="chart-point" cx="350" cy="78.0" r="10" fill="transparent" data-tip-date="Feb 23, 2026" data-tip-label="Price change" data-tip-value="$625,000" />
-        <circle class="chart-point" cx="412" cy="95.7" r="10" fill="transparent" data-tip-date="Apr 6, 2026" data-tip-label="Price change" data-tip-value="$599,000" />
-        <circle class="chart-point" cx="474" cy="112.1" r="10" fill="transparent" data-tip-date="May 28, 2026" data-tip-label="Price change" data-tip-value="$575,000" />
-        <circle class="chart-point" cx="536" cy="129.8" r="10" fill="transparent" data-tip-date="Jun 23, 2026" data-tip-label="Price change" data-tip-value="$549,000" />
-        <circle class="chart-point" cx="598" cy="129.8" r="10" fill="transparent" data-tip-date="Jul 1, 2026" data-tip-label="Went under contract" data-tip-value="$549,000" />
-        <circle class="chart-point" cx="660" cy="129.8" r="12" fill="transparent" data-tip-date="Jul 16, 2026" data-tip-label="Pending — option period cleared" data-tip-value="$549,000" />
+        <circle class="chart-point" cx="40.0" cy="149.5" r="10" fill="transparent" data-tip-date="Jan 9, 2020" data-tip-label="Listed for sale (builder)" data-tip-value="$520,000" />
+        <circle class="chart-point" cx="91.7" cy="163.3" r="10" fill="transparent" data-tip-date="May 22, 2020" data-tip-label="Price change" data-tip-value="$499,900" />
+        <circle class="chart-point" cx="143.3" cy="161.5" r="10" fill="transparent" data-tip-date="Jan 13, 2021" data-tip-label="Sold (purchased)" data-tip-value="$502,505" />
+        <circle class="chart-point" cx="195.0" cy="27.5" r="10" fill="transparent" data-tip-date="Oct 17, 2024" data-tip-label="Listed for sale" data-tip-value="$699,000" />
+        <circle class="chart-point" cx="246.7" cy="27.5" r="8" fill="transparent" data-tip-date="Feb 3, 2025" data-tip-label="Taken off market" data-tip-value="Last asking $699,000" />
+        <circle class="chart-point" cx="298.3" cy="27.5" r="8" fill="transparent" data-tip-date="Aug 2025 (approx.)" data-tip-label="Private / exclusive listing (Compass)" data-tip-value="Not publicly listed" />
+        <circle class="chart-point" cx="350.0" cy="60.9" r="10" fill="transparent" data-tip-date="Oct 16, 2025" data-tip-label="Relisted" data-tip-value="$650,000" />
+        <circle class="chart-point" cx="401.7" cy="78.0" r="10" fill="transparent" data-tip-date="Feb 23, 2026" data-tip-label="Price change" data-tip-value="$625,000" />
+        <circle class="chart-point" cx="453.3" cy="95.7" r="10" fill="transparent" data-tip-date="Apr 6, 2026" data-tip-label="Price change" data-tip-value="$599,000" />
+        <circle class="chart-point" cx="505.0" cy="112.1" r="10" fill="transparent" data-tip-date="May 28, 2026" data-tip-label="Price change" data-tip-value="$575,000" />
+        <circle class="chart-point" cx="556.7" cy="129.8" r="10" fill="transparent" data-tip-date="Jun 23, 2026" data-tip-label="Price change" data-tip-value="$549,000" />
+        <circle class="chart-point" cx="608.3" cy="129.8" r="10" fill="transparent" data-tip-date="Jul 1, 2026" data-tip-label="Went under contract" data-tip-value="$549,000" />
+        <circle class="chart-point" cx="660.0" cy="129.8" r="12" fill="transparent" data-tip-date="Jul 16, 2026" data-tip-label="Pending — option period cleared" data-tip-value="$549,000" />
 
-        <text x="226" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-muted)">$699,000 asking (2024)</text>
+        <text x="195" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-muted)">$699,000 asking (2024)</text>
+        <text x="272" y="45" text-anchor="middle" font-size="9" fill="var(--text-muted)">off market ~8 mo</text>
         <text x="660" y="118" text-anchor="end" font-size="13" font-weight="600" fill="var(--accent)">$549,000 · Pending</text>
 
         <text x="40" y="188" font-size="10" fill="var(--text-muted)">2020</text>
-        <text x="164" y="188" text-anchor="middle" font-size="10" fill="var(--text-muted)">Purchased</text>
+        <text x="143" y="188" text-anchor="middle" font-size="10" fill="var(--text-muted)">Purchased</text>
         <text x="660" y="188" text-anchor="end" font-size="10" font-weight="600" fill="var(--accent)">Now</text>
       </svg>
     </div>
-    <p class="font-sans text-[10px] mb-8" style="color:var(--text-muted); opacity:0.8;">HCAD appraised value shown for 2022–2026 (annual, plotted at each tax year); 2026 reflects a filed protest, not yet ARB-certified as of Jun 19, 2026 (originally noticed at $574,973). Hover any point on either line for exact date and value.</p>
+    <p class="font-sans text-[10px] mb-8" style="color:var(--text-muted); opacity:0.8;">HCAD appraised value shown for 2022–2026 (annual, plotted at each tax year); 2026 reflects a filed protest, not yet ARB-certified as of Jun 19, 2026 (originally noticed at $574,973). The dashed gray segment marks roughly six months off-market (Feb–Aug 2025) followed by a brief private/exclusive listing with Compass before the public relist in October 2025. Hover any point on either line for exact date and value.</p>
 
     <div class="overflow-x-auto">
       <table class="w-full font-sans text-sm" style="border-collapse:collapse;">
@@ -599,8 +610,20 @@
             <td class="py-3 text-right" style="color:var(--text-muted);">$248</td>
           </tr>
           <tr class="border-b border-rule">
+            <td class="py-3 pr-4 whitespace-nowrap" style="color:var(--text-muted);">Feb 3, 2025</td>
+            <td class="py-3 pr-4" style="color:var(--text);">Taken off market</td>
+            <td class="py-3 pr-4 text-right" style="color:var(--text);">$699,000</td>
+            <td class="py-3 text-right" style="color:var(--text-muted);">$248</td>
+          </tr>
+          <tr class="border-b border-rule">
+            <td class="py-3 pr-4 whitespace-nowrap" style="color:var(--text-muted);">Aug 2025 (approx.)</td>
+            <td class="py-3 pr-4" style="color:var(--text);">Private / exclusive listing (Compass)</td>
+            <td class="py-3 pr-4 text-right" style="color:var(--text-muted);">—</td>
+            <td class="py-3 text-right" style="color:var(--text-muted);">—</td>
+          </tr>
+          <tr class="border-b border-rule">
             <td class="py-3 pr-4 whitespace-nowrap" style="color:var(--text-muted);">Oct 16, 2025</td>
-            <td class="py-3 pr-4" style="color:var(--text);">Price change</td>
+            <td class="py-3 pr-4" style="color:var(--text);">Relisted</td>
             <td class="py-3 pr-4 text-right" style="color:var(--text);">$650,000</td>
             <td class="py-3 text-right" style="color:var(--text-muted);">$231</td>
           </tr>
